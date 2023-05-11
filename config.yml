@@ -1,0 +1,15 @@
+database:
+  host: localhost
+  port: 5432
+  user: root
+  password: root
+  dbname: root
+
+server:
+  host: 127.0.0.1
+  port: 8080
+
+
+auth:
+  identifier: airland
+  domain: dev-ufr7cz6nxjg6f3it.us.auth0.com
