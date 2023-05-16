@@ -58,6 +58,7 @@ require (
 	github.com/gin-contrib/cors v1.4.0
 	github.com/gin-contrib/logger v0.2.5
 	github.com/gin-gonic/gin v1.9.0
+	github.com/gofrs/uuid v4.4.0+incompatible
 	github.com/google/uuid v1.3.0
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect

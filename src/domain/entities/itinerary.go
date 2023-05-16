@@ -9,8 +9,12 @@ import (
 
 type Itinerary struct {
 	ID          uuid.UUID `gorm:"primaryKey; index; unique; type:uuid;"`
-	Name        string    `gorm:"not null; default:null"`
+	UserID      string    `gorm:"not null; index;"`
+	Title       string    `gorm:"not null;"`
 	Description string
+	Budget      float32
+	StartAt     time.Time
+	EndAt       time.Time
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	DeletedAt   gorm.DeletedAt `gorm:"index"`

@@ -2,7 +2,8 @@ package router
 
 import (
 	"airland-server/docs"
-	"airland-server/src/config"
+	"airland-server/src/cross_cutting/config"
+
 	"airland-server/src/cross_cutting/models"
 	"airland-server/src/infrastructure/middlewares"
 
@@ -26,15 +27,20 @@ type Routes struct {
 }
 
 func NewRouter() (routes *Routes) {
-	docs.SwaggerInfo.Host = fmt.Sprintf("%s:%s", config.C.Server.Host, config.C.Server.Port)
+	//Configurate gin default router and cors
 	router := gin.Default()
 	router.Use(cors.New(getCorsConfig()))
+
+	//Start version group and add middlewares to log info and recovery server in case of panic
 	version := router.Group("v1/")
-	auth := middlewares.Bootstrap()
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
+
+	//Create group for private routes and initizalize Auth0 middleware
 	private := version.Group("private/")
+	auth := middlewares.Bootstrap()
 	private.Use(auth.CheckJWT)
+	private.Use(middlewares.CheckUserId())
 
 	routes = &Routes{
 		Router:  router,
@@ -49,11 +55,18 @@ func NewRouter() (routes *Routes) {
 	return routes
 }
 
+/*
+* Configurate swagger routes and docs path
+ */
 func (r *Routes) swagger() {
+	docs.SwaggerInfo.Host = fmt.Sprintf("%s:%s", config.C.Server.Host, config.C.Server.Port)
 	docs.SwaggerInfo.BasePath = "/v1"
 	r.Public.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 }
 
+/*
+* Get Cors config to use with gin.Use
+ */
 func getCorsConfig() cors.Config {
 	config := cors.DefaultConfig()
 	config.AllowAllOrigins = true

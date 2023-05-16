@@ -3,8 +3,9 @@ package server
 import (
 	"fmt"
 
-	"airland-server/src/config"
-	"airland-server/src/infrastructure/router"
+	"airland-server/src/cross_cutting/config"
+
+	"airland-server/src/presentation/router"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,7 +1,8 @@
 package middlewares
 
 import (
-	"airland-server/src/config"
+	"airland-server/src/cross_cutting/config"
+
 	"context"
 	"log"
 	"net/http"
@@ -23,7 +24,7 @@ type CustomClaims struct {
 }
 
 type Auth struct {
-	middleware *jwtmiddleware.JWTMiddleware
+	Middleware *jwtmiddleware.JWTMiddleware
 	CheckJWT   gin.HandlerFunc
 }
 
@@ -71,7 +72,7 @@ func Bootstrap() (a *Auth) {
 	)
 
 	a = &Auth{
-		middleware: middleware,
+		Middleware: middleware,
 		CheckJWT:   adapter.Wrap(middleware.CheckJWT),
 	}
 	return

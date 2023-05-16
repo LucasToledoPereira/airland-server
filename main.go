@@ -3,7 +3,8 @@ package main
 import (
 	"fmt"
 
-	"airland-server/src/config"
+	"airland-server/src/cross_cutting/config"
+
 	"airland-server/src/cross_cutting/ioc"
 )
 

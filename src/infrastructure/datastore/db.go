@@ -3,8 +3,8 @@ package datastore
 import (
 	"fmt"
 
-	"airland-server/src/config"
-	"airland-server/src/domain/entities"
+	"airland-server/src/cross_cutting/config"
+	"airland-server/src/infrastructure/migrations"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -55,7 +55,7 @@ func connectDB() (db *gorm.DB, err error) {
 }
 
 func migrateDB(db *gorm.DB) (err error) {
-	if err := db.AutoMigrate(&entities.Itinerary{}); err != nil {
+	if err := migrations.Migrate(db); err != nil {
 		return err
 	}
 
